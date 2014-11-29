@@ -8,6 +8,8 @@
  * So Game.TOUGH parts should probably be specified first.
  */
 
+var _ = require('lodash');
+
 module.exports.assault = function (creep) {
     var target = creep.pos.findNearest(Game.HOSTILE_CREEPS);
     if (target) {
@@ -19,13 +21,13 @@ module.exports.assault = function (creep) {
 module.exports.spawn = function () {
     var result = Game.spawns.Spawn1.createCreep(
         [Game.TOUGH, Game.MOVE, Game.MOVE, Game.ATTACK],
-        'Assault' + (Memory.config.assaultCount + 1),
+        'Assault' + (Memory.roles['melee'].numActive + 1),
         {'role': 'assault'}
     );
 
     // better error handling?
     if (_.isString(result)) {
-        Memory.config.assaultCount++;
+        Memory.roles['melee'].numActive++;
     }
 
     console.log('spawn assault return val: ' + result);

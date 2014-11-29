@@ -27,13 +27,13 @@ module.exports.harvest = function (creep) {
 module.exports.spawn = function () {
     var result = Game.spawns.Spawn1.createCreep(
         [Game.MOVE, Game.MOVE, Game.CARRY, Game.WORK],
-        'Harvester' + (Memory.config.harvesterCount + 1),
+        'Harvester' + (Memory.roles['harvester'].numActive + 1),
         {'role': 'harvester'}
     );
 
     // better error handling?
     if (_.isString(result)) {
-        Memory.config.harvesterCount++;
+        Memory.roles['harvester'].numActive++;
     }
 
     console.log('spawn harvester return val: ' + result);

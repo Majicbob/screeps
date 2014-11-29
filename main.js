@@ -5,109 +5,140 @@
  *
  * Lodash module is provided by the game and is the JS lib. See https://lodash.com/docs
  *
- * Might want to think about moving to spawn functions out of the different creep modules.
+ * I think strategies should by a folder with a subfolder per strat to contain main file and
+ * any strat specific modules. Need to find out if the game will support that. If not then use
+ * namespace like filenames.
  *
  * @TODO: Need to find out how the CPU credits work. Will efficiency or mem use of the code matter?
- *
- * Survival Mode Notes:
- * Energy Runs out fast building DPS, probably need to scale harvesters with something and increase default.
- * The killed creep scanner definetly needed, had to manually reset 3 times.
- * Got my new high score though 465.
+ * @TODO: Creep factory. Might want to think about moving to spawn functions out of the different creep modules.
+ * @TODO: Come up with an interface/prototype for strategies.
  */
 
-// Modules
+/**
+ * Modules
+ *
+ * @TODO: Create Healer role module.
+ */
 var _         = require('lodash');
 var harvester = require('harvester');
 var builder   = require('builder');
 var assault   = require('assault');
 
+var strategy  = require('strategy_survival');
 
 /**
- * Config Values
+ * Global Config Values
  *
- * Maybe this should be rolled into a high-level strategy the module.
- * I could see wanting different sets for game types or what not.
+ * Vars that aren't strategy specific
  */
+// stub, none at the moment
 
 /**
- * Amount of harvesters to auto-build.
- *
- * Probably move these to Memory or a strategy module.
- *
- * @TODO: Need to have a scan function that will adjust the Memory.harvesterCount when one ages or gets killed.
+ * Game functions, not strat specific
  */
-var MAX_HARVESTERS = 2;
-var MAX_ASSAULT    = 3;
 
 /**
  * Initializtion of Memory vars
  */
 function initMemory() {
-    if (_.isUndefined(Memory.config)) {
-        Memory.config = {};
-        Memory.config.harvesterCount = 0;
-        Memory.config.assaultCount   = 0;
+    if (! _.isUndefined(Memory.roles)) {
+        return;
     }
+
+    Memory.config = {};
+    // stub, none at the moment
+
+    /**
+     * Map of roles, strats can add to this
+     *
+     * Should the roles be an array or map? Seems to need to be a map, was having issues using an array.
+     * Should the active count be in here? I don't see why not.
+     * Role prototype?
+     */
+    Memory.roles = {};
+
+    /**
+     * Basic global level harvester.
+     *
+     * Cost: 170
+     */
+    Memory.roles.harvester = {
+        "name":  "Harvester",
+        "role":  "harvester",
+        "build": [Game.MOVE, Game.MOVE, Game.CARRY, Game.WORK],
+        "numActive": 0,
+    };
+
+    /**
+     * Basic global level melee.
+     *
+     * Cost: 205
+     */
+    Memory.roles.melee = {
+        "name":  "Melee",
+        "role":  "assault", // Should the different types of assault have thier own roles?
+        "build": [Game.TOUGH, Game.MOVE, Game.MOVE, Game.ATTACK],
+        "numActive": 0,
+    };
 }
 
-
 /**
- * Main Game Logic
- */
-
-initMemory();
-
-/**
- * Status Scan. Check for units that have died.
+ * Status Scan
  *
- * Might want to add units that can't move since so far they aren't very useful.
- * Also need to check to see if I need to filter for ones that belong to me.
+ * Check for units that have died or shouldn't be included in the active count.
+ *
+ * This can probably stay in global with maybe an overide or hook for strat level scan logic.
  *
  * @TODO: Create a roles array/object for these type functions can be a loop. Will need one for every role.
+ * @TODO: Treat units that can't move as dead since so far they aren't very useful.
+ * @TODO: Check to see if I need to filter for ones that belong to me.
  */
-var liveHarvesters = _.filter(Game.creeps, {
-    memory: {role: 'harvester'}
-});
-if (_.isObject(liveHarvesters)) {
-    Memory.config.harvesterCount = liveHarvesters.length;
-}
+function statusScan() {
+    var currentRole = {}, activeCreeps = [];
+    for (var i in Memory.roles) {
+        currentRole = Memory.roles[i];
 
-var liveAssaults = _.filter(Game.creeps, {
-    memory: {role: 'assault'}
-});
-if (_.isObject(liveHarvesters)) {
-    Memory.config.assaultCount = liveAssaults.length;
+        activeCreeps = _.filter(Game.creeps, {
+            memory: {role: currentRole.role}
+        });
+
+        if (_.isObject(activeCreeps)) {
+            currentRole.numActive = activeCreeps.length;
+        }
+    }
 }
 
 /**
- * This should probably be moved out to a screep factory type module.
+ * Do Creep Actions
  *
- * 1st run all 3 assaults were created but the harvester count got incremented.
- * 2nd run did harvesters first but still ++'ed the assault. Assault move parts got distoryed.
- * 3rd run the status scan fixed the issue, move and energy still an issue.
+ * Should this be strat specific/have a strat hook?
  */
-if (Memory.config.harvesterCount != MAX_HARVESTERS) {
-    harvester.spawn();
-}
-if (Memory.config.assaultCount != MAX_ASSAULT) {
-    assault.spawn();
-}
+function doCreepActions() {
+    // Main creep loop
+    for(var creepName in Game.creeps) {
+        var creep = Game.creeps[creepName];
 
-// Main creep loop
-for(var creepName in Game.creeps) {
-    var creep = Game.creeps[creepName];
+        //console.log(Memory.creeps[creepName].role);
 
-    //console.log(Memory.creeps[creepName].role);
+        if (Memory.creeps[creepName].role == 'harvester') {
+            harvester.harvest(creep);
+        }
 
-    if (Memory.creeps[creepName].role == 'harvester') {
-        harvester.harvest(creep);
-    }
+        if (Memory.creeps[creepName].role == 'builder') {
+            builder(creep);
+        }
 
-    if (Memory.creeps[creepName].role == 'builder') {
-        builder(creep);
-    }
-
-    if (Memory.creeps[creepName].role == 'assault') {
-        assault.assault(creep);
+        if (Memory.creeps[creepName].role == 'assault') {
+            assault.assault(creep);
+        }
     }
 }
+
+
+/**
+ * Main Game Loop
+ */
+initMemory();
+statusScan();
+strategy.run();
+doCreepActions();
