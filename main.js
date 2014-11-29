@@ -70,19 +70,20 @@ var liveHarvesters = _.filter(Game.creeps, {
 if (_.isObject(liveHarvesters)) {
     Memory.config.harvesterCount = liveHarvesters.length;
 }
+
 var liveAssaults = _.filter(Game.creeps, {
     memory: {role: 'assault'}
 });
 if (_.isObject(liveHarvesters)) {
-    Memory.config.assaultCount   = liveAssaults.length;
+    Memory.config.assaultCount = liveAssaults.length;
 }
 
 /**
  * This should probably be moved out to a screep factory type module.
  *
  * 1st run all 3 assaults were created but the harvester count got incremented.
- * 2nd run did harvesters first but still ++'ed the assault.
- * Probably will need priority or queing or better checking
+ * 2nd run did harvesters first but still ++'ed the assault. Assault move parts got distoryed.
+ * 3rd run the status scan fixed the issue, move and energy still an issue.
  */
 if (Memory.config.harvesterCount != MAX_HARVESTERS) {
     harvester.spawn();
