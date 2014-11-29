@@ -2,7 +2,10 @@
  * Harvester Module
  */
 
-// var _ = require('lodash');
+function returnEnergy(creep, spawn) {
+    creep.moveTo(spawn);
+    creep.transferEnergy(spawn);
+}
 
 /**
  * Basic harvesting function. If not full then find nearest source and harvest then return to spawn and transfer.
@@ -14,14 +17,16 @@
  */
 module.exports.harvest = function (creep) {
     var spawn = Game.spawns.Spawn1;
+    var source = creep.pos.findNearest(Game.SOURCES);
 
-    if (creep.energy < creep.energyCapacity) {
-        var source = creep.pos.findNearest(Game.SOURCES);
+    if (source.energy === 0 && creep.energy != 0) {
+        returnEnergy(creep, spawn);
+    }
+    else if (creep.energy < creep.energyCapacity) {
         creep.moveTo(source);
         creep.harvest(source);
     }
     else {
-        creep.moveTo(spawn);
-        creep.transferEnergy(spawn);
+        returnEnergy(creep, spawn);
     }
 };
