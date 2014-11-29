@@ -19,16 +19,17 @@ module.exports.assault = function (creep) {
 };
 
 module.exports.spawn = function () {
+    var role = Memory.roles.melee;
     var result = Game.spawns.Spawn1.createCreep(
-        [Game.TOUGH, Game.MOVE, Game.MOVE, Game.ATTACK],
-        'Assault' + (Memory.roles['melee'].numActive + 1),
-        {'role': 'assault'}
+        role.build,
+        role.name + (role.numActive + 1),
+        {'role': role.role}
     );
 
     // better error handling?
     if (_.isString(result)) {
-        Memory.roles['melee'].numActive++;
+        role.numActive++;
     }
 
-    console.log('spawn assault return val: ' + result);
+    console.log('spawn melee return val: ' + result);
 };

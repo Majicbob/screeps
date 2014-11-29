@@ -11,6 +11,7 @@
  * 3rd - Status Scan fixed the issue, move and energy still an issue.
  *
  * @TODO: Have to build the harvesters first, at least one or two.
+ * @TODO: Need to get some ranged dps in.
  */
 
 /**
