@@ -2,13 +2,15 @@
  * Harvester Module
  */
 
-var _ = require('lodash');
+// var _ = require('lodash');
 
 /**
  * Basic harvesting function. If not full then find nearest source and harvest then return to spawn and transfer.
  *
  * Right now Spawn1 is hardcoded b/c I've only been working with one.
  * Probably will want to change that to find closest or assign it through Memory.
+ *
+ * @TODO: If the source is depleted then return to base and transfer.
  */
 module.exports.harvest = function (creep) {
     var spawn = Game.spawns.Spawn1;
@@ -22,20 +24,4 @@ module.exports.harvest = function (creep) {
         creep.moveTo(spawn);
         creep.transferEnergy(spawn);
     }
-};
-
-module.exports.spawn = function () {
-    var role = Memory.roles.harvester;
-    var result = Game.spawns.Spawn1.createCreep(
-        role.build,
-        role.name + (role.numActive + 1),
-        {'role': role.role}
-    );
-
-    // better error handling?
-    if (_.isString(result)) {
-        role.numActive++;
-    }
-
-    console.log('spawn harvester return val: ' + result);
 };

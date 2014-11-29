@@ -12,6 +12,7 @@
  *
  * @TODO: Have to build the harvesters first, at least one or two.
  * @TODO: Need to get some ranged dps in.
+ * @TODO: If no enemies are around then return dps to spawn point.
  */
 
 /**
@@ -39,16 +40,38 @@ var MAX_ASSAULT    = 3;
  */
 
 /**
+ * Spawn creep
+ *
+ * @TODO: Pull this out to its own module since it will be shared across strats
+ * @TODO: Param for spawn
+ */
+function spawn(role) {
+    var spawner = Game.spawns.Spawn1;
+    var result = spawner.createCreep(
+        role.build,
+        role.name + (role.numActive + 1),
+        {'role': role.role}
+    );
+
+    // better error handling?
+    if (_.isString(result)) {
+        role.numActive++;
+    }
+
+    //console.log('spawn return val: ' + result);
+}
+
+/**
  * Spawn creeps as needed. Spawn harvesters first, only spawn melee if harvesters are at max.
  *
  * Should this be moved out to a screep factory type module? It is strat specific so not sure yet.
  */
 function spawnCreeps() {
-    if (Memory.roles['harvester'].numActive != MAX_HARVESTERS) {
-        harvester.spawn();
+    if (Memory.roles.harvester.numActive != MAX_HARVESTERS) {
+        spawn(Memory.roles.harvester);
     }
-    if (Memory.roles['harvester'].numActive == MAX_HARVESTERS && Memory.roles['melee'].numActive != MAX_ASSAULT) {
-        assault.spawn();
+    if (Memory.roles.harvester.numActive == MAX_HARVESTERS && Memory.roles.melee.numActive != MAX_ASSAULT) {
+        spawn(Memory.roles.melee);
     }
 }
 
