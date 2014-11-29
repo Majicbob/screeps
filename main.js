@@ -1,5 +1,13 @@
 /**
  * Screeps Main Module
+ *
+ * Notes:
+ *
+ * Lodash module is provided by the game and is the JS lib. See https://lodash.com/docs
+ *
+ * Might want to think about moving to spawn functions out of the different creep modules.
+ *
+ * Need to find out how the CPU credits work. Will efficiency of the code matter?
  */
 
 var _         = require('lodash');
