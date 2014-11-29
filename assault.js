@@ -15,18 +15,3 @@ module.exports.assault = function (creep) {
         creep.attack(target);
     }
 };
-
-module.exports.spawn = function () {
-    var result = Game.spawns.Spawn1.createCreep(
-        [Game.TOUGH, Game.MOVE, Game.MOVE, Game.ATTACK],
-        'Assault' + (Memory.config.assaultCount + 1),
-        {'role': 'assault'}
-    );
-
-    // better error handling?
-    if (_.isString(result)) {
-        Memory.config.assaultCount++;
-    }
-
-    console.log('spawn assault return val: ' + result);
-};
