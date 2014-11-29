@@ -44,6 +44,7 @@ var MAX_ASSAULT    = 3;
  */
 function initMemory() {
     if (_.isUndefined(Memory.config)) {
+        Memory.config = {};
         Memory.config.harvesterCount = 0;
         Memory.config.assaultCount   = 0;
     }
