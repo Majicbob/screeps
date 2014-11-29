@@ -9,6 +9,8 @@
  * any strat specific modules. Need to find out if the game will support that. If not then use
  * namespace like filenames.
  *
+ * Ranged DPS can shoot over walls.
+ *
  * @TODO: Need to find out how the CPU credits work. Will efficiency or mem use of the code matter?
  * @TODO: Creep factory. Might want to think about moving to spawn functions out of the different creep modules.
  * @TODO: Come up with an interface/prototype for strategies.

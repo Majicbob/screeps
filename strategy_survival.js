@@ -10,7 +10,7 @@
  * 2nd - Did harvesters first but still ++'ed the assault. Assault move parts got distoryed.
  * 3rd - Status Scan fixed the issue, move and energy still an issue.
  *
- * @TODO: Have to build the harvesters first, at least one or two. Figure out a way to control the order.
+ * @TODO: Have to build the harvesters first, at least one or two.
  */
 
 /**
@@ -38,7 +38,7 @@ var MAX_ASSAULT    = 3;
  */
 
 /**
- * Spawn creeps as needed.
+ * Spawn creeps as needed. Spawn harvesters first, only spawn melee if harvesters are at max.
  *
  * Should this be moved out to a screep factory type module? It is strat specific so not sure yet.
  */
@@ -46,7 +46,7 @@ function spawnCreeps() {
     if (Memory.roles['harvester'].numActive != MAX_HARVESTERS) {
         harvester.spawn();
     }
-    if (Memory.roles['melee'].numActive != MAX_ASSAULT) {
+    if (Memory.roles['harvester'].numActive == MAX_HARVESTERS && Memory.roles['melee'].numActive != MAX_ASSAULT) {
         assault.spawn();
     }
 }
