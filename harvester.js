@@ -33,13 +33,13 @@ module.exports.harvest = function (creep) {
     var source   = findSource();
 
     if (source.energy === 0 && creep.energy !== 0) {
-        returnEnergy(creep, spawn);
+        returnEnergy(spawn);
     }
     else if (creep.energy < creep.energyCapacity) {
         creep.moveTo(source);
         creep.harvest(source);
     }
     else {
-        returnEnergy(creep, spawn);
+        returnEnergy(spawn);
     }
 };
