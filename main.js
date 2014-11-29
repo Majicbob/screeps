@@ -8,6 +8,11 @@
  * Might want to think about moving to spawn functions out of the different creep modules.
  *
  * @TODO: Need to find out how the CPU credits work. Will efficiency or mem use of the code matter?
+ *
+ * Survival Mode Notes:
+ * Energy Runs out fast building DPS, probably need to scale harvesters with something and increase default.
+ * The killed creep scanner definetly needed, had to manually reset 3 times.
+ * Got my new high score though 465.
  */
 
 // Modules
@@ -49,7 +54,36 @@ function initMemory() {
  * Main Game Logic
  */
 
-// This should probably be moved out to a screep factory type module.
+initMemory();
+
+/**
+ * Status Scan. Check for units that have died.
+ *
+ * Might want to add units that can't move since so far they aren't very useful.
+ * Also need to check to see if I need to filter for ones that belong to me.
+ *
+ * @TODO: Create a roles array/object for these type functions can be a loop. Will need one for every role.
+ */
+var liveHarvesters = _.filter(Game.creeps, {
+    memory: {role: 'harvester'}
+});
+if (_.isObject(liveHarvesters)) {
+    Memory.config.harvesterCount = liveHarvesters.length;
+}
+var liveAssaults = _.filter(Game.creeps, {
+    memory: {role: 'assault'}
+});
+if (_.isObject(liveHarvesters)) {
+    Memory.config.assaultCount   = liveAssaults.length;
+}
+
+/**
+ * This should probably be moved out to a screep factory type module.
+ *
+ * 1st run all 3 assaults were created but the harvester count got incremented.
+ * 2nd run did harvesters first but still ++'ed the assault.
+ * Probably will need priority or queing or better checking
+ */
 if (Memory.config.harvesterCount != MAX_HARVESTERS) {
     harvester.spawn();
 }
