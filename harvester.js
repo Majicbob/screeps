@@ -1,10 +1,22 @@
 /**
  * Harvester Module
+ *
+ * Notes:
+ * Sources regen time seems to increase each time it happens. Will need to update source finding code.
  */
 
-function returnEnergy(creep, spawn) {
-    creep.moveTo(spawn);
-    creep.transferEnergy(spawn);
+var currentCreep = {};
+
+/**
+ * Find best source to harvest
+ */
+function findSource() {
+    return currentCreep.pos.findNearest(Game.SOURCES);
+}
+
+function returnEnergy(spawn) {
+    currentCreep.moveTo(spawn);
+    currentCreep.transferEnergy(spawn);
 }
 
 /**
@@ -16,10 +28,11 @@ function returnEnergy(creep, spawn) {
  * @TODO: If the source is depleted then return to base and transfer.
  */
 module.exports.harvest = function (creep) {
-    var spawn = Game.spawns.Spawn1;
-    var source = creep.pos.findNearest(Game.SOURCES);
+    currentCreep = creep;
+    var spawn    = Game.spawns.Spawn1;
+    var source   = findSource();
 
-    if (source.energy === 0 && creep.energy != 0) {
+    if (source.energy === 0 && creep.energy !== 0) {
         returnEnergy(creep, spawn);
     }
     else if (creep.energy < creep.energyCapacity) {
