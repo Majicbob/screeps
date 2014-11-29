@@ -10,7 +10,7 @@
 module.exports = function(builder) {
     var spawn = Game.spawns.Spawn1;
 
-    if(0 === builder.energy) {
+    if (0 === builder.energy) {
         builder.moveTo(spawn);
         builder.transferEnergy(spawn);
     }

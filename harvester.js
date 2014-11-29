@@ -15,7 +15,7 @@
 module.exports.harvest = function (creep) {
     var spawn = Game.spawns.Spawn1;
 
-    if(creep.energy < creep.energyCapacity) {
+    if (creep.energy < creep.energyCapacity) {
         var source = creep.pos.findNearest(Game.SOURCES);
         creep.moveTo(source);
         creep.harvest(source);
