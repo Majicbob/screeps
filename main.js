@@ -92,6 +92,19 @@ function initMemory() {
     };
 
     /**
+     * Basic global level melee.
+     *
+     * Cost: 205
+     */
+    Memory.roles.ranged = {
+        "name":  "Ranged",
+        "role":  "ranged", // Should the different types of assault have thier own roles?
+        "build": [Game.TOUGH, Game.MOVE, Game.RANGED_ATTACK],
+        "numActive": 0,
+        "nameIndex": 0,
+    };
+
+    /**
      * Basic global level healer.
      *
      * Cost: 260
@@ -172,6 +185,10 @@ function doCreepActions() {
         }
 
         if (Memory.creeps[creepName].role == 'melee') {
+            assault.assault(creep);
+        }
+
+        if (Memory.creeps[creepName].role == 'ranged') {
             assault.assault(creep);
         }
     }
