@@ -1,11 +1,19 @@
 /**
  * Strategy Module for Survival Mode
  *
- * High Score: 506
+ * High Score: 556
  *
  * Notes:
  * Energy Runs out fast building DPS, probably need to scale harvesters with something and increase default.
- * Maybe create a range from base that the dps squad will attack, also work on a way to keep them close together.
+ * Work on a way to keep them close together.
+ *
+ * Going to need a more advanced unit management strat past the 500 mark. Probably with the queue and do away with
+ * the maxes. Determining what to build by what units are active. Will also need healer role developed. Ranged DPS
+ * for point defence will probably help some as well. The melee attack within range and guarding flag seems to
+ * be working better then the previous. If they lose move ability at least they are still somewhat useful.
+ *
+ * Will also need to be able to start harvesting a second source around 400. I wonder if there is any timing info
+ * available within the game.
  *
  * Run Notes:
  * Running out of energy still an issue.
@@ -31,7 +39,7 @@ var harvester = require('harvester');
  * Unit counts to auto-build per role.
  */
 var MAX_HARVESTERS = 2;
-var MAX_ASSAULT    = 3;
+var MAX_ASSAULT    = 4;
 var MAX_BUILDER    = 0;
 
 
