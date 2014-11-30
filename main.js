@@ -68,12 +68,12 @@ function initMemory() {
     /**
      * Basic global level harvester.
      *
-     * Cost: 170
+     * Cost: 140
      */
     Memory.roles.harvester = {
         "name":  "Harvester",
         "role":  "harvester",
-        "build": [Game.MOVE, Game.MOVE, Game.CARRY, Game.WORK],
+        "build": [Game.MOVE, Game.WORK, Game.CARRY, Game.WORK],
         "numActive": 0,
         "nameIndex": 0,
     };
@@ -85,8 +85,21 @@ function initMemory() {
      */
     Memory.roles.melee = {
         "name":  "Melee",
-        "role":  "assault", // Should the different types of assault have thier own roles?
+        "role":  "melee", // Should the different types of assault have thier own roles?
         "build": [Game.TOUGH, Game.MOVE, Game.MOVE, Game.ATTACK],
+        "numActive": 0,
+        "nameIndex": 0,
+    };
+
+    /**
+     * Basic global level builder.
+     *
+     * Cost: 70
+     */
+    Memory.roles.builder = {
+        "name":  "Builder",
+        "role":  "builder",
+        "build": [Game.MOVE, Game.WORK],
         "numActive": 0,
         "nameIndex": 0,
     };
@@ -145,7 +158,7 @@ function doCreepActions() {
             builder(creep);
         }
 
-        if (Memory.creeps[creepName].role == 'assault') {
+        if (Memory.creeps[creepName].role == 'melee') {
             assault.assault(creep);
         }
     }
