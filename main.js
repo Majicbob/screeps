@@ -87,12 +87,10 @@ function initMemory() {
 /**
  * Status Scan
  *
- * Check for units that have died or shouldn't be included in the active count.
+ * Scans all creeps by role and updates the active count, removing units that died or can't move.
  *
  * This can probably stay in global with maybe an overide or hook for strat level scan logic.
  *
- * @TODO: Create a roles array/object for these type functions can be a loop. Will need one for every role.
- * @TODO: Treat units that can't move as dead since so far they aren't very useful.
  * @TODO: Check to see if I need to filter for ones that belong to me.
  */
 function statusScan() {
@@ -103,10 +101,19 @@ function statusScan() {
         activeCreeps = _.filter(Game.creeps, {
             memory: {role: currentRole.role}
         });
+        var numActive = activeCreeps.length;
 
-        if (_.isObject(activeCreeps)) {
-            currentRole.numActive = activeCreeps.length;
-        }
+        // If all the creep's move parts have 0 hits left then it can't move
+        _.forEach(activeCreeps, function(creep) {
+            var allMoveParts  = _.filter(creep.body, {'type': 'move'} );
+            var deadMoveParts = _.filter(allMoveParts, {'hits': 0} );
+
+            if (allMoveParts.length === deadMoveParts.length) {
+                numActive--;
+            }
+        });
+
+        currentRole.numActive = numActive;
     }
 }
 
