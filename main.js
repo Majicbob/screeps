@@ -92,6 +92,19 @@ function initMemory() {
     };
 
     /**
+     * Basic global level healer.
+     *
+     * Cost: 260
+     */
+    Memory.roles.healer = {
+        "name":  "Healer",
+        "role":  "healer",
+        "build": [Game.TOUGH, Game.TOUGH, Game.MOVE, Game.HEALER,],
+        "numActive": 0,
+        "nameIndex": 0,
+    };
+
+    /**
      * Basic global level builder.
      *
      * Cost: 70
