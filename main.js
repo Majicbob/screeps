@@ -99,7 +99,7 @@ function initMemory() {
     Memory.roles.builder = {
         "name":  "Builder",
         "role":  "builder",
-        "build": [Game.MOVE, Game.WORK],
+        "build": [Game.MOVE, Game.WORK, Game.CARRY],
         "numActive": 0,
         "nameIndex": 0,
     };
