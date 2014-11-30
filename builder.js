@@ -12,11 +12,11 @@ module.exports = function(builder) {
 
     if (0 === builder.energy) {
         builder.moveTo(spawn);
-        builder.transferEnergy(spawn);
+        spawn.transferEnergy(builder);
     }
     else {
         var site = builder.pos.findNearest(Game.CONSTRUCTION_SITES);
         builder.moveTo(site);
-        builder.harvest(site);
+        builder.build(site);
     }
 };
