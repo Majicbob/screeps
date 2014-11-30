@@ -53,7 +53,7 @@ function spawn(role) {
 
     var result = spawner.createCreep(
         role.build,
-        role.name + (role.numActive + 1),
+        role.name + (role.nameIndex++),
         {'role': role.role}
     );
 }

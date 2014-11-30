@@ -4,12 +4,18 @@
  * Notes:
  *
  * Lodash module is provided by the game and is the JS lib. See https://lodash.com/docs
+
  *
  * I think strategies should by a folder with a subfolder per strat to contain main file and
  * any strat specific modules. Need to find out if the game will support that. If not then use
  * namespace like filenames.
  *
  * Ranged DPS can shoot over walls.
+ *
+ * External Resources
+ * Reddit: https://www.reddit.com/r/screeps/
+ * StackOverflow: http://stackoverflow.com/questions/tagged/screeps
+ * Twitter: https://twitter.com/ScreepsGame
  *
  * @TODO: Need to find out how the CPU credits work. Will efficiency or mem use of the code matter?
  * @TODO: Creep factory. Might want to think about moving to spawn functions out of the different creep modules.
@@ -69,6 +75,7 @@ function initMemory() {
         "role":  "harvester",
         "build": [Game.MOVE, Game.MOVE, Game.CARRY, Game.WORK],
         "numActive": 0,
+        "nameIndex": 0,
     };
 
     /**
@@ -81,6 +88,7 @@ function initMemory() {
         "role":  "assault", // Should the different types of assault have thier own roles?
         "build": [Game.TOUGH, Game.MOVE, Game.MOVE, Game.ATTACK],
         "numActive": 0,
+        "nameIndex": 0,
     };
 }
 
