@@ -30,9 +30,9 @@ var harvester = require('harvester');
 /**
  * Unit counts to auto-build per role.
  */
-var MAX_HARVESTERS = 3;
+var MAX_HARVESTERS = 2;
 var MAX_ASSAULT    = 3;
-var MAX_BUILDER    = 1;
+var MAX_BUILDER    = 0;
 
 
 /**
