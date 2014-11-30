@@ -9,9 +9,11 @@
  */
 
 module.exports.assault = function (creep) {
-    var target = creep.pos.findNearest(Game.HOSTILE_CREEPS);
+    var target  = creep.pos.findNearest(Game.HOSTILE_CREEPS);
     if (target) {
-        creep.moveTo(target);
-        creep.attack(target);
+        if (creep.pos.inRangeTo(target.pos, 5)) {
+            creep.moveTo(target);
+            creep.attack(target);
+        }
     }
 };
