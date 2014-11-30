@@ -41,23 +41,23 @@ var MAX_ASSAULT    = 3;
 /**
  * Spawn creep
  *
+ * Should there be a check for available energy before trying to spawn?
+ *
  * @TODO: Pull this out to its own module since it will be shared across strats
  * @TODO: Param for spawn
  */
 function spawn(role) {
     var spawner = Game.spawns.Spawn1;
+
+    if (spawner.spawning) {
+        return false;
+    }
+
     var result = spawner.createCreep(
         role.build,
         role.name + (role.numActive + 1),
         {'role': role.role}
     );
-
-    // better error handling?
-    if (_.isString(result)) {
-        role.numActive++;
-    }
-
-    //console.log('spawn return val: ' + result);
 }
 
 /**
