@@ -1,17 +1,15 @@
 /**
  * Strategy Module for Survival Mode
  *
- * High Score: 480
+ * High Score: 503
  *
  * Notes:
  * Energy Runs out fast building DPS, probably need to scale harvesters with something and increase default.
  *
  * Run Notes:
- * Creeps with no move is a problem.
  * Running out of energy still an issue.
  *
  * @TODO: Need to get some ranged dps in.
- * @TODO: If no enemies are around then return dps to spawn point.
  */
 
 /**
@@ -75,8 +73,26 @@ function spawnCreeps() {
 }
 
 /**
+ * Guard Base. If there are no hostile creeps then bring all the melee back to base.
+ */
+function guardBase() {
+    var spawn   = Game.spawns.Spawn1
+    var enemies = spawn.room.find(Game.HOSTILE_CREEPS);
+
+    if (_.isEmpty(enemies)) {
+        var melee = _.filter(Game.creeps, {
+            memory: {role: 'assault'}
+        });
+        _.forEach(melee, function (creep) {
+            creep.moveTo(spawn);
+        });
+    }
+}
+
+/**
  * Main strategy hook, main game loop calls this. And only this?
  */
 module.exports.run = function () {
     spawnCreeps();
+    guardBase();
 };

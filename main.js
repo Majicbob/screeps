@@ -104,7 +104,7 @@ function statusScan() {
         var numActive = activeCreeps.length;
 
         // If all the creep's move parts have 0 hits left then it can't move
-        _.forEach(activeCreeps, function(creep) {
+        _.forEach(activeCreeps, function (creep) {
             var allMoveParts  = _.filter(creep.body, {'type': 'move'} );
             var deadMoveParts = _.filter(allMoveParts, {'hits': 0} );
 
