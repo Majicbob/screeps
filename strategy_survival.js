@@ -97,7 +97,7 @@ function guardPoint(location) {
 
     if (_.isEmpty(enemies)) {
         var melee = _.filter(Game.creeps, {
-            memory: {role: 'assault'}
+            memory: {role: 'melee'}
         });
         _.forEach(melee, function (creep) {
             creep.moveTo(location);
