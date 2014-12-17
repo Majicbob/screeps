@@ -92,14 +92,14 @@ function initMemory() {
     };
 
     /**
-     * Basic global level melee.
+     * Basic global level ranged.
      *
-     * Cost: 205
+     * Cost: 215
      */
     Memory.roles.ranged = {
         "name":  "Ranged",
         "role":  "ranged", // Should the different types of assault have thier own roles?
-        "build": [Game.TOUGH, Game.MOVE, Game.RANGED_ATTACK],
+        "build": [Game.TOUGH, Game.TOUGH, Game.TOUGH, Game.MOVE, Game.RANGED_ATTACK],
         "numActive": 0,
         "nameIndex": 0,
     };

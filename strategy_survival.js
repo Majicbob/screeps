@@ -1,7 +1,10 @@
 /**
  * Strategy Module for Survival Mode
  *
- * High Score: 556
+ * High Scores:
+ *   Map 1 - 1422 (Something must have been updated in the game, previously it was 556 with only minor changes to the strat)
+ *   Map 2 -
+ *   Map 3 -
  *
  * Notes:
  * Energy Runs out fast building DPS, probably need to scale harvesters with something and increase default.
@@ -19,6 +22,7 @@
  * Running out of energy still an issue.
  *
  * @TODO: Need to get some ranged dps in.
+ * @TODO: Target healers first if they exist.
  */
 
 /**
@@ -87,7 +91,7 @@ function spawnCreeps() {
         spawn(Memory.roles.harvester);
     }
     if (Memory.roles.harvester.numActive == MAX_HARVESTERS && Memory.roles.melee.numActive != MAX_ASSAULT) {
-        spawn(Memory.roles.melee);
+        spawn(Memory.roles.ranged);
     }
 
     // Only spawn a builder after harvesters and dps are maxed
