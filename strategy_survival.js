@@ -60,10 +60,8 @@ var MAX_BUILDER    = 0;
  * Update unit counts based on progress and eventually emplement unit tiers
  */
 function statusScan() {
-    var currentRole = {}, activeCreeps = [];
-    for (var i in Memory.roles) {
-        currentRole = Memory.roles[i];
-
+    if (Memory.roles.ranged.numActive === MAX_ASSAULT) {
+        MAX_HARVESTERS = 6;
     }
 }
 
@@ -111,7 +109,7 @@ function spawnCreeps() {
     }
 
     // Only spawn a builder after harvesters and dps are maxed
-    if (Memory.roles.melee.numActive == MAX_ASSAULT && Memory.roles.builder.numActive != MAX_BUILDER) {
+    if (Memory.roles.ranged.numActive >= MAX_ASSAULT && Memory.roles.builder.numActive != MAX_BUILDER) {
         spawn(Memory.roles.builder);
     }
 }
@@ -145,6 +143,7 @@ function guardPoint(location) {
  * Main strategy hook, main game loop calls this. And only this?
  */
 module.exports.run = function () {
+    statusScan();
     spawnCreeps();
     guardPoint(Game.flags.Flag1);
 };
