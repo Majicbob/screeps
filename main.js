@@ -68,12 +68,12 @@ function initMemory() {
     /**
      * Basic global level harvester.
      *
-     * Cost: 140
+     * Cost: 190
      */
     Memory.roles.harvester = {
         "name":  "Harvester",
         "role":  "harvester",
-        "build": [Game.MOVE, Game.WORK, Game.CARRY, Game.WORK],
+        "build": [Game.MOVE, Game.WORK, Game.MOVE, Game.CARRY, Game.WORK],
         "numActive": 0,
         "nameIndex": 0,
     };
@@ -189,7 +189,7 @@ function doCreepActions() {
         }
 
         if (Memory.creeps[creepName].role == 'ranged') {
-            assault.assault(creep);
+            assault.rangedAttack(creep);
         }
     }
 }
