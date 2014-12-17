@@ -3,7 +3,7 @@
  *
  * High Scores:
  *   Map 1 - 1422 (Something must have been updated in the game, previously it was 556 with only minor changes to the strat)
- *   Map 2 -
+ *   Map 2 - 1611
  *   Map 3 -
  *
  * Notes:
@@ -19,10 +19,9 @@
  * available within the game.
  *
  * Run Notes:
- * Running out of energy still an issue.
+ * Energy regen seems to have been patched and largely increased, trying more harvesters per node.
  *
  * @TODO: Need to get some ranged dps in.
- * @TODO: Target healers first if they exist.
  */
 
 /**
@@ -42,7 +41,7 @@ var harvester = require('harvester');
 /**
  * Unit counts to auto-build per role.
  */
-var MAX_HARVESTERS = 2;
+var MAX_HARVESTERS = 4;
 var MAX_ASSAULT    = 4;
 var MAX_BUILDER    = 0;
 
@@ -109,7 +108,7 @@ function guardPoint(location) {
 
     if (_.isEmpty(enemies)) {
         var melee = _.filter(Game.creeps, {
-            memory: {role: 'melee'}
+            memory: {role: 'ranged'}
         });
         _.forEach(melee, function (creep) {
             creep.moveTo(location);
