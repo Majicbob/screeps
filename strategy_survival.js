@@ -18,10 +18,13 @@
  * Will also need to be able to start harvesting a second source around 400. I wonder if there is any timing info
  * available within the game.
  *
+ * Should have a generic DPS role then break that down into classes.
+ *
  * Run Notes:
  * Energy regen seems to have been patched and largely increased, trying more harvesters per node.
  *
- * @TODO: Need to get some ranged dps in.
+ * Around 1600 the waves are coming in with massive 10 part units.
+ *
  */
 
 /**
@@ -42,13 +45,27 @@ var harvester = require('harvester');
  * Unit counts to auto-build per role.
  */
 var MAX_HARVESTERS = 4;
-var MAX_ASSAULT    = 4;
+var MAX_ASSAULT    = 9;
 var MAX_BUILDER    = 0;
 
 
 /**
  * Strategy Logic
  */
+
+
+/**
+ * Status Scan - Strategy Level
+ *
+ * Update unit counts based on progress and eventually emplement unit tiers
+ */
+function statusScan() {
+    var currentRole = {}, activeCreeps = [];
+    for (var i in Memory.roles) {
+        currentRole = Memory.roles[i];
+
+    }
+}
 
 /**
  * Spawn creep
@@ -106,12 +123,20 @@ function guardPoint(location) {
     // var spawn   = Game.spawns.Spawn1
     var enemies = location.room.find(Game.HOSTILE_CREEPS);
 
+    var ret;
     if (_.isEmpty(enemies)) {
         var melee = _.filter(Game.creeps, {
             memory: {role: 'ranged'}
         });
         _.forEach(melee, function (creep) {
-            creep.moveTo(location);
+            ret = creep.moveTo(location);
+            if (ret === Game.ERR_NO_PATH) {
+                var direction = creep.pos.getDirectionTo(location);
+                creep.move(direction);
+            }
+            else {
+                console.log(ret);
+            }
         });
     }
 }
