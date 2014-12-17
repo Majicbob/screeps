@@ -20,7 +20,6 @@ module.exports.assault = function (creep) {
 
 module.exports.rangedAttack = function (creep) {
 
-    // attach any active healers first
     var targets = creep.room.find(
         Game.HOSTILE_CREEPS, {
         filter: function(i) {
@@ -28,16 +27,24 @@ module.exports.rangedAttack = function (creep) {
         }
     });
 
+    // attack any active healers first, otherwise the closest
+    var target;
     if (targets.length) {
         // for each here?
-        var target = targets[0];
+        target = targets[0];
+    }
+    else {
+        target  = creep.pos.findNearest(Game.HOSTILE_CREEPS);
+        if (null === target) {
+            return;
+        }
+    }
 
-        if (creep.pos.inRangeTo(target.pos, 3)) {
-            creep.rangedAttack(target);
-        }
-        else {
-            var direction = creep.pos.getDirectionTo(target);
-            creep.move(direction);
-        }
+    if (creep.pos.inRangeTo(target.pos, 3)) {
+        creep.rangedAttack(target);
+    }
+    else {
+        var direction = creep.pos.getDirectionTo(target);
+        creep.move(direction);
     }
 };
