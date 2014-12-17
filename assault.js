@@ -17,3 +17,27 @@ module.exports.assault = function (creep) {
         }
     }
 };
+
+module.exports.rangedAttack = function (creep) {
+
+    // attach any active healers first
+    var targets = creep.room.find(
+        Game.HOSTILE_CREEPS, {
+        filter: function(i) {
+            return i.getActiveBodyparts('heal') > 0;
+        }
+    });
+
+    if (targets.length) {
+        // for each here?
+        var target = targets[0];
+
+        if (creep.pos.inRangeTo(target.pos, 3)) {
+            creep.rangedAttack(target);
+        }
+        else {
+            var direction = creep.pos.getDirectionTo(target);
+            creep.move(direction);
+        }
+    }
+};
