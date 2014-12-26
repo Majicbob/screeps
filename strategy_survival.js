@@ -60,7 +60,7 @@ var MAX_BUILDER    = 0;
  * Update unit counts based on progress and eventually emplement unit tiers
  */
 function statusScan() {
-    if (Memory.roles.ranged.numActive === MAX_ASSAULT) {
+    if (Memory.roles.ranged.numActive >= MAX_ASSAULT) {
         MAX_HARVESTERS = 6;
     }
 }
@@ -101,7 +101,7 @@ function spawn(role) {
  * Some sort of queue for spawning would be good. This logic could get complicated without it.
  */
 function spawnCreeps() {
-    if (Memory.roles.harvester.numActive != MAX_HARVESTERS) {
+    if (Memory.roles.harvester.numActive < MAX_HARVESTERS) {
         spawn(Memory.roles.harvester);
     }
     if (Memory.roles.harvester.numActive == MAX_HARVESTERS && Memory.roles.melee.numActive != MAX_ASSAULT) {
