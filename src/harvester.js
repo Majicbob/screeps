@@ -11,7 +11,7 @@ var currentCreep = {};
  * Find best source to harvest
  */
 function findSource() {
-    return currentCreep.pos.findNearest(Game.SOURCES);
+    return currentCreep.pos.findClosestByRange(FIND_SOURCES);
 }
 
 function returnEnergy(spawn) {
@@ -32,10 +32,11 @@ module.exports.harvest = function (creep) {
     var spawn    = Game.spawns.Spawn1;
     var source   = findSource();
 
-    if (source.energy === 0 && creep.energy !== 0) {
+    if (source.energy === 0 && creep.carry.energy !== 0) {
+        console.log('Source out of energy');
         returnEnergy(spawn);
     }
-    else if (creep.energy < creep.energyCapacity) {
+    else if (creep.carry.energy < creep.carryCapacity) {
         creep.moveTo(source);
         creep.harvest(source);
     }

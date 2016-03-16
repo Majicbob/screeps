@@ -66,14 +66,28 @@ function initMemory() {
     Memory.roles = {};
 
     /**
+     * Updated Cost Info - 2016-03-15
+     * http://support.screeps.com/hc/en-us/articles/203013212-Creep
+     *
+     * Move      50
+     * Work     100
+     * Carry     50
+     * Attack    80
+     * Ranged   150
+     * Heal     250
+     * Claim    600
+     * Tough     10
+     */
+
+    /**
      * Basic global level harvester.
      *
-     * Cost: 190
+     * Cost: 200
      */
     Memory.roles.harvester = {
         "name":  "Harvester",
         "role":  "harvester",
-        "build": [Game.MOVE, Game.WORK, Game.MOVE, Game.CARRY, Game.WORK],
+        "build": [MOVE, CARRY, CARRY, WORK],
         "numActive": 0,
         "nameIndex": 0,
     };
@@ -81,12 +95,12 @@ function initMemory() {
     /**
      * Basic global level melee.
      *
-     * Cost: 205
+     * Cost: 190
      */
     Memory.roles.melee = {
         "name":  "Melee",
         "role":  "melee", // Should the different types of assault have thier own roles?
-        "build": [Game.TOUGH, Game.MOVE, Game.MOVE, Game.ATTACK],
+        "build": [TOUGH, MOVE, MOVE, ATTACK],
         "numActive": 0,
         "nameIndex": 0,
     };
@@ -94,12 +108,12 @@ function initMemory() {
     /**
      * Basic global level ranged.
      *
-     * Cost: 215
+     * Cost: 230
      */
     Memory.roles.ranged = {
         "name":  "Ranged",
         "role":  "ranged", // Should the different types of assault have thier own roles?
-        "build": [Game.TOUGH, Game.TOUGH, Game.TOUGH, Game.MOVE, Game.RANGED_ATTACK],
+        "build": [TOUGH, TOUGH, TOUGH, MOVE, RANGED_ATTACK],
         "numActive": 0,
         "nameIndex": 0,
     };
@@ -107,12 +121,12 @@ function initMemory() {
     /**
      * Basic global level healer.
      *
-     * Cost: 260
+     * Cost: 300
      */
     Memory.roles.healer = {
         "name":  "Healer",
         "role":  "healer",
-        "build": [Game.TOUGH, Game.TOUGH, Game.MOVE, Game.HEALER,],
+        "build": [MOVE, HEAL],
         "numActive": 0,
         "nameIndex": 0,
     };
@@ -120,12 +134,14 @@ function initMemory() {
     /**
      * Basic global level builder.
      *
-     * Cost: 70
+     * @todo This is the same as the harvester now, look into that
+     *
+     * Cost: 200
      */
     Memory.roles.builder = {
         "name":  "Builder",
         "role":  "builder",
-        "build": [Game.MOVE, Game.WORK, Game.CARRY],
+        "build": [MOVE, WORK, CARRY],
         "numActive": 0,
         "nameIndex": 0,
     };

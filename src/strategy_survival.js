@@ -119,21 +119,27 @@ function spawnCreeps() {
  */
 function guardPoint(location) {
     // var spawn   = Game.spawns.Spawn1
-    var enemies = location.room.find(Game.HOSTILE_CREEPS);
+    var enemies = location.room.find(FIND_MY_CONSTRUCTION_SITES);
 
     var ret;
     if (_.isEmpty(enemies)) {
         var melee = _.filter(Game.creeps, {
             memory: {role: 'ranged'}
         });
+
         _.forEach(melee, function (creep) {
+            if (0 != creep.fatigue) {
+                // return if this one can't move
+                return;
+            }
+
             ret = creep.moveTo(location);
-            if (ret === Game.ERR_NO_PATH) {
+            if (ret === OK) {
                 var direction = creep.pos.getDirectionTo(location);
                 creep.move(direction);
             }
             else {
-                console.log(ret);
+                console.log('Move return: ' + ret);
             }
         });
     }
@@ -145,5 +151,6 @@ function guardPoint(location) {
 module.exports.run = function () {
     statusScan();
     spawnCreeps();
-    guardPoint(Game.flags.Flag1);
+    guardPoint(Game.spawns.Spawn1);
+    // guardPoint(Game.flags.Flag1);
 };

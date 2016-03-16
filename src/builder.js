@@ -15,7 +15,7 @@ module.exports = function(builder) {
         spawn.transferEnergy(builder);
     }
     else {
-        var site = builder.pos.findNearest(Game.CONSTRUCTION_SITES);
+        var site = builder.pos.findClosestByRange(FIND_MY_CONSTRUCTION_SITES);
         builder.moveTo(site);
         builder.build(site);
     }
