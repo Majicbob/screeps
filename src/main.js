@@ -32,7 +32,8 @@ var harvester = require('harvester');
 var builder   = require('builder');
 var assault   = require('assault');
 
-var strategy  = require('strategy_survival');
+// var strategy  = require('strategy_survival');
+var strategy  = require('strategy_world');
 
 /**
  * Global Config Values
@@ -59,7 +60,6 @@ function initMemory() {
     /**
      * Map of roles, strats can add to this
      *
-     * Should the roles be an array or map? Seems to need to be a map, was having issues using an array.
      * Should the active count be in here? I don't see why not.
      * Role prototype?
      */
@@ -87,7 +87,7 @@ function initMemory() {
     Memory.roles.harvester = {
         "name":  "Harvester",
         "role":  "harvester",
-        "build": [MOVE, CARRY, CARRY, WORK],
+        "build": [CARRY, CARRY, MOVE, WORK],
         "numActive": 0,
         "nameIndex": 0,
     };
@@ -154,7 +154,6 @@ function initMemory() {
  *
  * This can probably stay in global with maybe an overide or hook for strat level scan logic.
  *
- * @TODO: Check to see if I need to filter for ones that belong to me.
  */
 function statusScan() {
     var currentRole = {}, activeCreeps = [];
@@ -184,6 +183,7 @@ function statusScan() {
  * Do Creep Actions
  *
  * Should this be strat specific/have a strat hook?
+ * @todo Move to strat, actions will likely be strat specific
  */
 function doCreepActions() {
     // Main creep loop
