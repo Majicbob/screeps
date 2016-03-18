@@ -15,8 +15,25 @@ function findSource() {
 }
 
 function returnEnergy(spawn) {
-    currentCreep.moveTo(spawn);
-    currentCreep.transferEnergy(spawn);
+    if ('upgradeRC' == currentCreep.memory.status) {
+        if (currentCreep.room.controller) {
+            if (currentCreep.upgradeController(currentCreep.room.controller) == ERR_NOT_IN_RANGE) {
+                currentCreep.moveTo(currentCreep.room.controller);
+            }
+        }
+
+        return;
+    }
+
+    if (spawn.energy == spawn.energyCapacity) {
+        // upgrade room controller
+        currentCreep.memory.status = 'upgradeRC';
+
+    }
+    else {
+        currentCreep.moveTo(spawn);
+        currentCreep.transferEnergy(spawn);
+    }
 }
 
 /**
@@ -32,15 +49,30 @@ module.exports.harvest = function (creep) {
     var spawn    = Game.spawns.Spawn1;
     var source   = findSource();
 
+    if (creep.carry.energy == 0) {
+        creep.memory.status = 'harvest';
+    }
+
+    if ('harvest' == creep.memory.status) {
+        if (creep.harvest(source) == ERR_NOT_IN_RANGE) {
+            creep.moveTo(source);
+        }
+
+        if (creep.carry.energy == creep.carryCapacity) {
+            creep.memory.status = '';
+        }
+
+        return;
+    }
+
     if (source.energy === 0 && creep.carry.energy !== 0) {
         console.log('Source out of energy');
         returnEnergy(spawn);
     }
-    else if (creep.carry.energy < creep.carryCapacity) {
-        creep.moveTo(source);
-        creep.harvest(source);
-    }
     else {
         returnEnergy(spawn);
     }
+
+
+
 };
