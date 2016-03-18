@@ -1,0 +1,21 @@
+{
+  "name": "screeps",
+  "version": "0.1.0",
+  "description": "Screeps AI code",
+  "main": "main.js",
+  "dependencies": {
+    "grunt": "^0.4.5",
+    "grunt-screeps": "^1.2.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@bitbucket.org/MajicBob/screeps.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "homepage": "https://bitbucket.org/MajicBob/screeps#readme"
+}
