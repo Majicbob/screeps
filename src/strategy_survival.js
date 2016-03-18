@@ -35,7 +35,7 @@ var _ = require('lodash');
 // Roles
 var assault   = require('assault');
 var harvester = require('harvester');
-
+var Spawn     = require('spawn');
 
 /**
  * Strategy Config Values
@@ -65,33 +65,9 @@ function statusScan() {
     }
 }
 
-/**
- * Spawn creep
- *
- * Should there be a check for available energy before trying to spawn? Yes, name id
- *
- * @TODO: Pull this out to its own module since it will be shared across strats
- * @TODO: Param for spawn
- */
+
 function spawn(role) {
-    var spawner = Game.spawns.Spawn1;
 
-    if (spawner.spawning) {
-        return false;
-    }
-
-    var result = spawner.createCreep(
-        role.build,
-        role.name + (role.nameIndex + 1),
-        {'role': role.role}
-    );
-
-    if (_.isString(result)) {
-        role.nameIndex++;
-    }
-    else {
-        console.log('Spawn error: ' + result);
-    }
 }
 
 /**
@@ -102,15 +78,15 @@ function spawn(role) {
  */
 function spawnCreeps() {
     if (Memory.roles.harvester.numActive < MAX_HARVESTERS) {
-        spawn(Memory.roles.harvester);
+        Spawn.spawn(Memory.roles.harvester);
     }
     if (Memory.roles.harvester.numActive == MAX_HARVESTERS && Memory.roles.melee.numActive != MAX_ASSAULT) {
-        spawn(Memory.roles.ranged);
+        Spawn.spawn(Memory.roles.ranged);
     }
 
     // Only spawn a builder after harvesters and dps are maxed
     if (Memory.roles.ranged.numActive >= MAX_ASSAULT && Memory.roles.builder.numActive != MAX_BUILDER) {
-        spawn(Memory.roles.builder);
+        Spawn.spawn(Memory.roles.builder);
     }
 }
 
